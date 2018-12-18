@@ -1,0 +1,26 @@
+{# Internal properties #}
+{% set _css_class = 'ecl-hero-banner' %}
+{% set _title = title|default('') %}
+{% set _description = description|default('') %}
+{% set _banner_type = banner_type|default('default') %}
+{% set _button_attributes='' %}
+
+{# Internal logic - Process properties #}
+{% set _css_class = _css_class ~ ' ecl-hero-banner--' ~ _banner_type %}
+
+{% if button_attributes is defined and button_attributes is not empty and button_attributes is iterable %}
+  {% for attr in button_attributes %}
+    {% set _button_attributes = _button_attributes ~ ' ' ~ attr.name ~ '="' ~ attr.value ~ '"' %}
+  {% endfor %}
+{% endif %}
+
+{# Print the result #}
+<section class="{{ _css_class }}">
+  <div class="ecl-container ecl-hero-banner__container">
+    <div class="ecl-hero-banner__content">
+      <h1 class="ecl-hero-banner__title">{{ title }}</h1>
+      <p class="ecl-hero-banner__description">{{ description }}</p>
+      {% if _button_attributes is not empty %}<ecl-button{{ _button_attributes|raw }}></ecl-button>{% endif %}
+    </div>
+  </div>
+</section>
